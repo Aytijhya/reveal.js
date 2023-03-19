@@ -230,7 +230,7 @@
 						Note that, given a set of data points $\boldsymbol{x}_{1}, \ldots, \boldsymbol{x}_{n}$, the k-means algorithm attempts to find clusters $\ell_{1}, \ldots, \ell_{k}$ 
 						to minimize the following objective function:
 						$$
-						\min_{\left\{\ell_{c}\right\}_{c=1}^{k}} \sum_{c=1}^{k} \sum_{\boldsymbol{x} \in \ell_{c}}\left\|\boldsymbol{x}-\boldsymbol{\mu}_{c}\right\|_2^2
+						\min_{\left\{\ell_{c}\right\}_{c=1}^{k}} \sum_{c=1}^{k} \sum_{\boldsymbol{x} \in \ell_{c}}\|\boldsymbol{x}-\boldsymbol{\mu}_{c}\|_2^2
 						\text { , where }  \boldsymbol{\mu}_{c}=\dfrac{1}{\left|\ell_{c}\right|} \sum_{\boldsymbol{x} \in \ell_{c}} \boldsymbol{x} .
 						$$
 						</div>
@@ -246,11 +246,11 @@
 						<div>
 						Suppose in the mixture of Gaussians model that all Gaussians have the same fixed covariance equal to $\sigma I$. Because they are fixed, the covariances need not be re-estimated during the M-step. In this case, the E-step takes the following form:
 						$$
-						\gamma\left(z_{i c}\right)=\frac{\pi_{c} \cdot \exp \left(-\frac{1}{2 \sigma}\left\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\right\|_{2}^{2}\right)}{\sum_{j=1}^{k} \pi_{j} \cdot \exp \left(-\frac{1}{2 \sigma}\left\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\right\|_{2}^{2}\right)},
+						\gamma\left(z_{i c}\right)=\frac{\pi_{c} \cdot \exp (-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\|_2^{2})}{\sum_{j=1}^{k} \pi_{j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|_{2}^{2}\right)},
 						$$ 
 						here $\gamma\left(z_{i c}\right)$ is the probability of assigning point $i$ to cluster $c$.
 
-						Observe that as $\sigma \rightarrow 0$, $\gamma\left(z_{i c}\right)\to 1$, for $c=\arg \min \left\|\boldsymbol{x}_{i}-\mu_{c}\right\|_{2}^{2}$ and $\gamma\left(z_{i c}\right)\to 0$, otherwise.
+						Observe that as $\sigma \rightarrow 0$, $\gamma\left(z_{i c}\right)\to 1$, for $c=\arg \min \|\boldsymbol{x}_{i}-\mu_{c}\|_{2}^{2}$ and $\gamma\left(z_{i c}\right)\to 0$, otherwise.
 						This implies that the E-step is equivalent to the reassignment step of k-means, and one can further easily show that the M-step exactly recomputes the means of the new clusters, establishing the equivalence of the updates.
 
 						</div>
@@ -303,7 +303,7 @@
 							\boldsymbol{\mu}_{1}, \ldots, \boldsymbol{\mu}_{k} & \sim G_{0} \\
 							\boldsymbol{\pi} & \sim \operatorname{Dir}\left(k, (\alpha / k) \boldsymbol{e}\right) \\
 							\boldsymbol{z}_{1}, \ldots, \boldsymbol{z}_{n} & \sim \operatorname{Discrete}(\boldsymbol{\pi}) \\
-							\boldsymbol{x}_{1}, \ldots, \boldsymbol{x}_{n} & \sim \mathbf{N}\left(\boldsymbol{\mu}_{\boldsymbol{z}_{i}}, \sigma I\right)
+							\boldsymbol{x}_{1}, \ldots, \boldsymbol{x}_{n} & \sim \mathscr{N}\left(\boldsymbol{\mu}_{\boldsymbol{z}_{i}}, \sigma I\right)
 							\end{aligned}
 							$$
 						</div>
@@ -352,9 +352,9 @@
 						<div style="margin-top: 0.6cm;">
 							<ul>
 								<li class="fragment">
-									For $i=1, \ldots, n$, we reassign $\boldsymbol{x}_{i}$ to existing cluster $c$ with probability $\frac{n_{-i, c}}{Z} \cdot \mathcal{N}\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}_{c}, \sigma I\right)$, where $n_{-i, c}$ is the number of data points (excluding $\boldsymbol{x}_{i}$) that are assigned to cluster $c$. With probability
+									For $i=1, \ldots, n$, we reassign $\boldsymbol{x}_{i}$ to existing cluster $c$ with probability $\frac{n_{-i, c}}{Z} \cdot \mathscr{N}\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}_{c}, \sigma I\right)$, where $n_{-i, c}$ is the number of data points (excluding $\boldsymbol{x}_{i}$) that are assigned to cluster $c$. With probability
 									$
-									\frac{\alpha}{Z} \int \mathcal{N}\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}, \sigma I\right) d G_{0}(\boldsymbol{\mu})
+									\frac{\alpha}{Z} \int \mathscr{N}\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}, \sigma I\right) d G_{0}(\boldsymbol{\mu})
 									$,
 									we start a new cluster. $Z$ is an appropriate normalizing constant here.
 
@@ -389,7 +389,7 @@
 									<li class="fragment">
 										The posterior probability
 										of point $i$ being assigned to cluster $c$,
-										$$\hat{\gamma}\left(z_{i c}\right)=\frac{n_{-i, c} \cdot \exp \left(-\frac{1}{2 \sigma}\left\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\right\|^{2}\right)}{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\left\|\boldsymbol{x}_{i}\right\|^{2}}{2(\rho+\sigma)}\right)+\sum_{j=1}^{k} n_{-i, j} \cdot \exp \left(-\frac{1}{2 \sigma}\left\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\right\|^{2}\right)}$$
+										$$\hat{\gamma}\left(z_{i c}\right)=\frac{n_{-i, c} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\|^{2}\right)}{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\|\boldsymbol{x}_{i}\|^{2}}{2(\rho+\sigma)}\right)+\sum_{j=1}^{k} n_{-i, j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|^{2}\right)}$$
 									</li>
 								
 								</ul>
@@ -399,7 +399,7 @@
 								<ul>
 									<li class="fragment">
 								     and the posterior probability of starting a new cluster
-                                     $$\hat{\gamma}\left(z_{i, n e w}\right)=\frac{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\left\|\boldsymbol{x}_{i}\right\|^{2}}{2(\rho+\sigma)}\right)}{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\left\|\boldsymbol{x}_{i}\right\|^{2}}{2(\rho+\sigma)}\right)+\sum_{j=1}^{k} n_{-i, j} \cdot \exp \left(-\frac{1}{2 \sigma}\left\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\right\|^{2}\right)}.$$ 
+                                     $$\hat{\gamma}\left(z_{i, n e w}\right)=\frac{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\|\boldsymbol{x}_{i}\|^{2}}{2(\rho+\sigma)}\right)}{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\|\boldsymbol{x}_{i}\|^{2}}{2(\rho+\sigma)}\right)+\sum_{j=1}^{k} n_{-i, j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|^{2}\right)}.$$ 
 									</li>
 								
 								</ul>
@@ -415,7 +415,7 @@
 							<div>
 								<ul>
 									<li class="fragment">
-										As $\sigma \rightarrow 0$, the values of $\hat{\gamma}\left(z_{i, c}\right)$ and $\hat{\gamma}\left(z_{i, n e w}\right)$ will be increasingly dominated by the smallest value of $\left\{\left\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{1}\right\|^{2}, \ldots, \| \boldsymbol{x}_{i}-\boldsymbol{\mu}_{k} \|^{2}, \lambda\right\}$ and only the smallest of these values will receive a non-zero $\hat{\gamma}$ value.
+										As $\sigma \rightarrow 0$, the values of $\hat{\gamma}\left(z_{i, c}\right)$ and $\hat{\gamma}\left(z_{i, n e w}\right)$ will be increasingly dominated by the smallest value of $\{\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{1}\|^{2}, \ldots, \| \boldsymbol{x}_{i}-\boldsymbol{\mu}_{k} \|^{2}, \lambda\right\}$ and only the smallest of these values will receive a non-zero $\hat{\gamma}$ value.
 									</li>
 								</ul>
 							</div>
@@ -511,7 +511,7 @@
 									Repeat until convergence:
 									<ol>
 										<li>
-											For each point $\boldsymbol{x}_i$, compute $d_{i c}=\left\|\boldsymbol{x}_i-\boldsymbol{\mu}_c\right\|^2$ for $c=1, \ldots, k$
+											For each point $\boldsymbol{x}_i$, compute $d_{i c}=\|\boldsymbol{x}_i-\boldsymbol{\mu}_c\|^2$ for $c=1, \ldots, k$
 										</li>
 
 										<li>
@@ -547,7 +547,7 @@
 								</font>  DP means algorithm  monotonically decreases the following objective until local convergence:
 								$$
 								\begin{array}{cc}
-								\min _{\left\{\ell_{c}\right\}_{c=1}^{k}} & \sum_{c=1}^{k} \sum_{\boldsymbol{x} \in \ell_{c}}\left\|\boldsymbol{x}-\boldsymbol{\mu}_{c}\right\|^{2}+\lambda k \\
+								\min _{\left\{\ell_{c}\right\}_{c=1}^{k}} & \sum_{c=1}^{k} \sum_{\boldsymbol{x} \in \ell_{c}}\|\boldsymbol{x}-\boldsymbol{\mu}_{c}\|^{2}+\lambda k \\
 								\text { where } & \boldsymbol{\mu}_{c}=\frac{1}{\left|\ell_{c}\right|} \sum_{\boldsymbol{x} \in \ell_{c}} \boldsymbol{x} .
 								\end{array}
 								$$	
