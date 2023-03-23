@@ -26,7 +26,7 @@
     <body>
         <div class="reveal">
             <div class="slides">
-                <section data-background="network.gif" data-background-opacity=0.7 style="font-size: 33px;" data-auto-animate
+                <section data-background="network.gif" data-background-opacity=0.4 style="font-size: 33px;" data-auto-animate
 				data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
                     <h3 id="heading" style="color: white; text-align: center; margin-bottom: 0.8cm; font-size: 60px;">
 						<font color="#FFFF00">  
@@ -108,7 +108,8 @@
                     </h3>
 					
 					<div>
-						<q>Machine Learning is a set of methods that can automatically detect patterns in data, and then use the uncovered patterns to 
+						<q>Machine Learning is a set of methods that can automatically detect patterns in data,
+						 and then use the uncovered patterns to 
 						predict future data, or to perform other kinds of decision-making under uncertainty.</q> 
 						<br>
 						- Kevin P. Murphy
@@ -129,7 +130,8 @@
 					<div>
 
                     Clustering is an unsupervised method for partitioning a collection of data
-                    points, into groups, such that the objects in a group will be similar (or related) to one another and different from (or unrelated to) the objects in other groups.
+                    points, into groups, such that the objects in a group will be similar (or related)
+				    to one another and different from (or unrelated to) the objects in other groups.
 					</div>
                     <center>
 						<img src="clustering.gif" class="centerImage" height="320" width="500" >
@@ -152,7 +154,7 @@
 					<div style="margin-top: 0.6cm;">
 						<ul>
 							<li class="fragment">
-								Hierarchial Clustering \cite{ward1963hierarchical}
+								Hierarchical Clustering \cite{ward1963hierarchical}
 							</li>
 						</ul>
 					</div>
@@ -189,7 +191,7 @@
 				</h4>
 			    <section data-transition="fade-in slide-out">
                     <h4>
-                        K-means clustering alogorithm
+                        K-means clustering algorithm
                     </h4>
                     
                     <div>
@@ -246,7 +248,8 @@
 						</h3>
 						
 						<div>
-						Suppose in the mixture of Gaussians model that all Gaussians have the same fixed covariance equal to $\sigma I$. Because they are fixed, the covariances need not be re-estimated during the M-step. In this case, the E-step takes the following form:
+						Suppose in the mixture of Gaussians model that all Gaussians have the same fixed covariance equal to $\sigma I$.
+					    Because they are fixed, the covariances need not be re-estimated during the M-step. In this case, the E-step takes the following form:
 						$$
 						\gamma\left(z_{i c}\right)=\frac{\pi_{c} \cdot \exp (-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\|_2^{2})}{\sum_{j=1}^{k} \pi_{j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|_{2}^{2}\right)},
 						$$ 
@@ -263,6 +266,7 @@
 						<h3>
 							Remarks
 						</h3>
+						<div style="margin-top: 0.6cm;">
 						<ul>
 						<li class="fragment">
 							The k-means algorithm may be viewed as a limit of the expectation - maximization (EM) algorithm. 
@@ -270,20 +274,32 @@
 							are equal to $\sigma I$ and $\sigma \to 0$, the EM steps approach the $\mathrm{k}$-means steps in the limit.
 
 						</li>
+					    </ul>
+					    </div>
 
-						<li class="fragment">	
+					    <div  style="margin-top: 0.6cm;">
+						
+						<ul>
+						<li class="fragment" >	
 							K-means is straightforward
 							to implement and works well for a variety of applications.
 							But, a major drawback of this algorithm is that the value of k needs to be specified by the user, which is not known in prior.
 
 						</li>
+					    </ul>
+					    </div>
 
+					    <div style="margin-top: 0.6cm;">
+					    <ul>
 						<li class="fragment">	
 						Whereas, Bayesian nonparametric models, viz. the Dirichlet process mixture \cite{hjort2010bayesian}, result in infinite mixture models which do not
 						fix the number of clusters in the data upfront; these methods
-						continue to gain popularity in the statistical learning community.
+						continue to gain popularity in the statistical learning community. But, Bayesian models require sampling algorithms
+						or variational inference techniques which can be difficult to
+						implement and are often not scalable.
 					    </li>
 					    </ul>
+					</div>
 					</section>
 
 					<section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-transition="fade-in slide-out">
@@ -417,7 +433,8 @@
 							<div>
 								<ul>
 									<li class="fragment">
-										As $\sigma \rightarrow 0$, the values of $\hat{\gamma}\left(z_{i, c}\right)$ and $\hat{\gamma}\left(z_{i, n e w}\right)$ will be increasingly dominated by the smallest value of $\{\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{1}\|^{2}, \ldots, \| \boldsymbol{x}_{i}-\boldsymbol{\mu}_{k} \|^{2}, \lambda\right\}$ and only the smallest of these values will receive a non-zero $\hat{\gamma}$ value.
+										As $\sigma \rightarrow 0$, the values of $\hat{\gamma}\left(z_{i, c}\right)$ and $\hat{\gamma}\left(z_{i, n e w}\right)$ will be increasingly dominated 
+										by the smallest value of $\left\{\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{1}\|^{2}, \cdots, \| \boldsymbol{x}_{i}-\boldsymbol{\mu}_{k} \|^{2}, \lambda\right\}$ and only the smallest of these values will receive a non-zero $\hat{\gamma}$ value.
 									</li>
 								</ul>
 							</div>
@@ -484,13 +501,13 @@
 							<font color="#FFFF01">  
 								Input :
 							</font>
-							$\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n$ : input data, $\lambda:$ cluster penalty parameter
+							$\boldsymbol{x}_1, \cdots, \boldsymbol{x}_n$ : input data, $\lambda:$ cluster penalty parameter
 						</div>
 						<div class="fragment">
 							<font color="#FFFF01">  
 								Output:
 							</font>
-							Clustering $\ell_1, \ldots, \ell_k$ and number of clusters $k$
+							Clustering $\ell_1, \cdots, \ell_k$ and number of clusters $k$
 						</div>
 						<div class="fragment">
 							<ul>
@@ -498,7 +515,7 @@
 									<font color="#FFFF01">  
 										Step 1.
 									</font> 
-									Initialize: $k=1, \ell_1=\left\{\boldsymbol{x}_1, \ldots, \boldsymbol{x}_n\right\}$ and $\boldsymbol{\mu}_1$ the global mean.
+									Initialize: $k=1, \ell_1=\left\{\boldsymbol{x}_1, \cdots, \boldsymbol{x}_n\right\}$ and $\boldsymbol{\mu}_1$ the global mean.
 								</li>
 								<li class="fragment">
 									<font color="#FFFF01">  
@@ -573,36 +590,87 @@
 
 				<section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-auto-animate
 				data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
-				<h4>
+				<h3>
 					<font color="#FFFF00">  
 						Experimental Results <br>  
 					</font> 
+				</h3>
+				<section data-transition="fade-in slide-out">
+				<h4>
+					Normalized Mutual Information (NMI)
 				</h4>
+				<div>
+					Normalized Mutual Information between class labels $Y$ and cluster labels $C$ is defines as:
+					$$NMI(Y,C)=\frac{2\times I(Y,C)}{H(Y)+H(C)}$$
+				    where, $H$ is the entropy, $I(Y,C)$ is the mutual information between $Y$ and $C$. 
+					Mutual Information tells us the reduction in the entropy of class labels that we get if we know the cluster labels.
+					NMI takes value between 0 and 1.
+				</div>
+				<div style="margin-top: 0.6cm;">
+					<ul>
+						<li class="fragment">
+							NMI is a standard measure for determining the quality of clustering	. Higher the NMI, better the quality of clustering.
+						</li>
+						<li class="fragment">
+							Since it is normalized we can measure and
+							compare the NMI between different
+							clusterings having different number of
+							clusters.
+						</li>
+					
+					</ul>
+				</div>
 
+				</section>
+				<section data-transition="fade-in slide-out">
+					<div>
+					To demonstrate advantage of this method over DP Gibbes sampler, a synthetic data set of three Gaussians, shown in the left figure was used.
+					The middle figure shows the NMI scores of the clusterings produced by DP means and two Gibbs runs (one that learns  $\alpha$ via a
+					gamma prior, and another that uses a validation set to tune $\alpha$.)over the first 5000 iterations.
+					Additionally, the number of clusters produced by DP-means as a function of $\lambda$ is plotted in right figure, where we see that there is a large interval of $\lambda$
+					values where the algorithm returns three clusters.
+				    </div>
+					<img width="300" src="data.png">
+                    <img width="300" src="tune.png">
+					<img width="310" src="nmi.png">
+				
+					</section>
 				    <section data-transition="fade-in slide-out">
 					<div class="fragment">
 						To demonstrate
 						comparable accuracies among the methods- k-means, DP-means, and Gibbs sampling, 8
 						common UCI data sets were selected.
+						in making comparisons to k-means we fix $k$.
+						Given an (approximate)
+						number of desired clusters $k$, we first initialize a set
+						$T$ with the global mean. We iteratively add to $T$ by finding
+						the point in the data set which has the maximum distance to
+						$T$ (the distance to $T$ is the smallest distance among points
+						in $T$). We repeat this $k$ times and return the value of the
+						maximum distance to $T$ in round $k$ as $\lambda$.
 						The NMI (normalized
 						mutual information) is computed between the ground-truth and the computed clusters, and results are averaged over 10 runs. The
 						results are shown in the following table:
 					
 					</div>
-
-					<div class="fragment">
+				</section>
+				<section data-transition="fade-in slide-out">
+					<div >
+						Table 1. Average NMI scores on a set of UCI data sets.
 						<table>
 							<tr>
-								<td>Dataset</td>
-								<td>DP Means</td>
-								<td>K-means</td>
-								<td>Gibbs</td>
+								<td><b>Dataset</b></td>
+								<td><b>DP Means</b></td>
+								<td><b>K-means</b></td>
+								<td><b>Gibbs</b></td>
 							</tr>
 							<tr>
 								<td>Soybean</td>
-								<td>.72</td>
+								<td><font color="#00FF00">  
+									.72
+								</font></td>
 								<td>.66</td>
-								<td>.73</td>
+								<td>.72</td>
 							</tr>
 							<tr>
 								<td>Wine</td>
@@ -612,7 +680,9 @@
 							</tr>
 							<tr>
 								<td>Breast Cancer</td>
-								<td>.04</td>
+								<td><font color="#00FF00">  
+									.04
+								</font></td>
 								<td>.03</td>
 								<td>.04</td>
 							</tr>
@@ -624,13 +694,17 @@
 							</tr>
 							<tr>
 								<td>Balance Scale</td>
-								<td>.17</td>
+								<td><font color="#00FF00">  
+									.17
+								</font></td>
 								<td>.11</td>
 								<td>.14</td>
 							</tr>
 							<tr>
 								<td>Vehicle</td>
-								<td>.18</td>
+								<td><font color="#00FF00">  
+									.18
+								</font></td>
 								<td>.18</td>
 								<td>.17</td>
 							</tr>
@@ -664,7 +738,7 @@
 					hard clustering that is capable of retaining some of the benefits of Bayesian
 					nonparametric. This algorithm do not require to specify the number of clusters,
 					which is a major advantage over k-means. But, it has some disadvantages also, for example,
-					the method involves a hyperparameter and sometimes it is difficult to tune the hyperpapameter.
+					the method involves a hyperparameter and sometimes it is difficult to tune the hyperparameter.
 				    </div>
 					
 				</section>
