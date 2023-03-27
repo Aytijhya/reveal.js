@@ -242,41 +242,12 @@
 				
 					</section>	
                 
-					<section data-background="bg-2jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-transition="fade-in slide-out">
-						<h3>
-							Connection between EM algorithm for GMM and K-means Algorithm
-						</h3>
-						
-						<div>
-						Suppose in the mixture of Gaussians model that all Gaussians have the same fixed covariance equal to $\sigma I$.
-					    Because they are fixed, the covariances need not be re-estimated during the M-step. In this case, the E-step takes the following form:
-						$$
-						\gamma\left(z_{i c}\right)=\frac{\pi_{c} \cdot \exp (-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\|_2^{2})}{\sum_{j=1}^{k} \pi_{j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|_{2}^{2}\right)},
-						$$ 
-						here $\gamma\left(z_{i c}\right)$ is the probability of assigning point $i$ to cluster $c$.
-
-						Observe that as $\sigma \rightarrow 0$, $\gamma\left(z_{i c}\right)\to 1$, for $c=\arg \min \|\boldsymbol{x}_{i}-\mu_{c}\|_{2}^{2}$ and $\gamma\left(z_{i c}\right)\to 0$, otherwise.
-						This implies that the E-step is equivalent to the reassignment step of k-means, and one can further easily show that the M-step exactly recomputes the means of the new clusters, establishing the equivalence of the updates.
-
-						</div>
-					
-					</section>
 
 					<section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-transition="fade-in slide-out">
 						<h3>
 							Remarks
 						</h3>
-						<div style="margin-top: 0.6cm;">
-						<ul>
-						<li class="fragment">
-							The k-means algorithm may be viewed as a limit of the expectation - maximization (EM) algorithm. 
-							If all of the covariance matrices corresponding to the clusters in a Gaussian mixture model 
-							are equal to $\sigma I$ and $\sigma \to 0$, the EM steps approach the $\mathrm{k}$-means steps in the limit.
-
-						</li>
-					    </ul>
-					    </div>
-
+	
 					    <div  style="margin-top: 0.6cm;">
 						
 						<ul>
@@ -318,33 +289,77 @@
 						<div class="fragment">
 							$$
 							\begin{aligned}
-							\boldsymbol{\mu}_{1}, \ldots, \boldsymbol{\mu}_{k} & \sim G_{0} \\
-							\boldsymbol{\pi} & \sim \operatorname{Dir}\left(k, (\alpha / k) \boldsymbol{e}\right) \\
+							\boldsymbol{\pi} & \sim \operatorname{Dir}\left(k, \boldsymbol{\pi}_{0}\right) \\
 							\boldsymbol{z}_{1}, \ldots, \boldsymbol{z}_{n} & \sim \operatorname{Discrete}(\boldsymbol{\pi}) \\
+							\boldsymbol{\mu}_{1}, \ldots, \boldsymbol{\mu}_{k} & \sim G_{0} \\
 							\boldsymbol{x}_{1}, \ldots, \boldsymbol{x}_{n} & \sim \mathscr{N}\left(\boldsymbol{\mu}_{\boldsymbol{z}_{i}}, \sigma I\right)
 							\end{aligned}
 							$$
 						</div>
-						<div>
-							Dirichlet process mixture model is the above model, as $k \to \infty$.
+						<div class="fragment">
+							If we take $\boldsymbol{\pi}_{0}=(\alpha/k)\boldsymbol{1}$, the limit is the above model, as $k \to \infty$, is known as Dirichlet process mixture model.
 						</div>
 					
 					</section>
 				</section>
 
-                <section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-auto-animate
+                <section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 25px;" data-auto-animate
 				data-auto-animate-easing="cubic-bezier(0.770, 0.000, 0.175, 1.000)">
 				<h4>
 					<font color="#FFFF00">  
 						Hard Clustering via Dirichlet Process <br>  
 					</font> 
 				</h4>
+				   <section data-transition="fade-in slide-out">
+					<h4>
+					Gibbs Sampling
+					</h4>
+					<div class="fragment">
+						One of the simplest algorithm for inference in a DP mixture is based on Gibbs sampling.
+						Gibbs sampling is a Markov chain Monte Carlo (MCMC) algorithm for obtaining a sequence of observations which are approximated from a specified multivariate probability distribution, when direct sampling is difficult.
+						Gibbs sampling consists of a random walk on an undirected graph
+						whose vertices, $V$ correspond to the values of $\boldsymbol{x} = (x_1, \cdots, x_d )$ and in which there is
+						an edge from $\boldsymbol{x}$ to $\boldsymbol{y}$ if $\boldsymbol{x}$ and $\boldsymbol{y}$ differ in only one coordinate. 
+
+					<div>
+						<ul>
+							<li class="fragment">
+								Choose an initial assignment.
+							</li>
+						</ul>
+					</div>
+
+					<div style="margin-top: 0.6cm;">
+						<ul>
+							<li class="fragment">
+								Fix an ordering of the variables (any order is fine).
+							</li>
+						</ul>
+					</div>
+					<div style="margin-top: 0.6cm;">
+						<ul>
+							<li class="fragment">
+								For each $j \in V$ in order, draw a sample $z$ from $p(x_j|x_1^{t+1},\cdots,x_{j-1}^{t+1},x_{j+1}^{t},x_{n}^{t})$
+							</li>
+						
+						</ul>
+					</div>
+					<div style="margin-top: 0.6cm;">
+						<ul>
+							<li class="fragment">
+								Set $t \xleftarrow{} t + 1$ and repeat from step 2.
+							</li>
+						
+						</ul>
+					</div>
+					
+				    </section>
 				    <section data-transition="fade-in slide-out">
 						<h4>
 						DP Gibbs Sampler 
 						</h4>
 						<div class="fragment">
-							A simplest algorithm for inference in a DP mixture is based on Gibbs sampling:
+						 The algorithm for inference in a DP mixture model based on Gibbs sampling is as follows:
 
 						</div>
 
@@ -389,6 +404,74 @@
 							
 							</ul>
 						</div>
+						
+					</section>
+					<section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-transition="fade-in slide-out">
+							<h4>
+								DP Gibbs Sampler 
+							</h4>
+							
+							<div>
+								Then, we have the following probabilities to be
+								used during Gibbs sampling:
+							</div>
+
+							<div style="margin-top: 0.6cm;">
+								<ul>
+									<li class="fragment">
+										The posterior probability
+										of point $i$ being assigned to cluster $c$,
+										$$\hat{\gamma}\left(z_{i c}\right)=\frac{n_{-i, c} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{c}\|^{2}\right)}{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\|\boldsymbol{x}_{i}\|^{2}}{2(\rho+\sigma)}\right)+\sum_{j=1}^{k} n_{-i, j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|^{2}\right)}$$
+									</li>
+								
+								</ul>
+							</div>
+
+							<div style="margin-top: 0.6cm;">
+								<ul>
+									<li class="fragment">
+								     and the posterior probability of starting a new cluster
+                                     $$\hat{\gamma}\left(z_{i, n e w}\right)=\frac{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\|\boldsymbol{x}_{i}\|^{2}}{2(\rho+\sigma)}\right)}{\exp \left(-\frac{\lambda}{2 \sigma}-\frac{\|\boldsymbol{x}_{i}\|^{2}}{2(\rho+\sigma)}\right)+\sum_{j=1}^{k} n_{-i, j} \cdot \exp \left(-\frac{1}{2 \sigma}\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{j}\|^{2}\right)}.$$ 
+									</li>
+								
+								</ul>
+							</div>
+						
+					</section>
+
+					<section data-background="bg-2.jpeg" data-background-opacity=0.4 style="text-align: left; font-size: 26px;" data-transition="fade-in slide-out">
+							<h4>
+								Asymptotics of the DP Gibbs Sampler
+							</h4>
+							
+							<div>
+								<ul>
+									<li class="fragment">
+										As $\sigma \rightarrow 0$, the values of $\hat{\gamma}\left(z_{i, c}\right)$ and $\hat{\gamma}\left(z_{i, n e w}\right)$ will be increasingly dominated 
+										by the smallest value of $\left\{\|\boldsymbol{x}_{i}-\boldsymbol{\mu}_{1}\|^{2}, \cdots, \| \boldsymbol{x}_{i}-\boldsymbol{\mu}_{k} \|^{2}, \lambda\right\}$ and only the smallest of these values will receive a non-zero $\hat{\gamma}$ value.
+									</li>
+								</ul>
+							</div>
+		
+							<div style="margin-top: 0.6cm;">
+								<ul>
+									<li class="fragment">
+										This implies reassignment a point to the cluster corresponding to the closest mean, 
+										if the closest cluster has squared distance smaller than $\lambda$. Otherwise, 
+										we start a new cluster, in which case we sample a new mean from the posterior based on the prior $G_{0}$ and
+										single observation $\boldsymbol{x}_{i}$
+									</li>
+								</ul>
+							</div>
+							<div style="margin-top: 0.6cm;">
+								<ul>
+									<li class="fragment">
+										Similarly, once we have performed Gibbs moves on the cluster assignments, we must perform Gibbs moves on all the means, which amounts to sampling from the posterior based on $G_{0}$ and all observations in a cluster.
+									</li>
+								
+								</ul>
+							</div>
+							
 						
 					</section>
 
@@ -535,7 +618,7 @@
 
 										<li>
 											If $\min _c d_{i c}>\lambda$, set $k=k+1, z_i=k$, and $\boldsymbol{\mu}_k=\boldsymbol{x}_i$.
-										\item Otherwise, set $z_i=\operatorname{argmin}_c d_{i c}$.
+										 Otherwise, set $z_i=\operatorname{argmin}_c d_{i c}$.
 
 										</li>
 										<li>
