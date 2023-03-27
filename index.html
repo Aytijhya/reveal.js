@@ -320,7 +320,7 @@
 						Gibbs sampling consists of a random walk on an undirected graph
 						whose vertices, $V$ correspond to the values of $\boldsymbol{x} = (x_1, \cdots, x_d )$ and in which there is
 						an edge from $\boldsymbol{x}$ to $\boldsymbol{y}$ if $\boldsymbol{x}$ and $\boldsymbol{y}$ differ in only one coordinate. 
-
+						The steps of the algorithm are as follows:
 					<div>
 						<ul>
 							<li class="fragment">
@@ -385,9 +385,9 @@
 						<div style="margin-top: 0.6cm;">
 							<ul>
 								<li class="fragment">
-									For $i=1, \ldots, n$, we reassign $\boldsymbol{x}_{i}$ to existing cluster $c$ with probability $\frac{n_{-i, c}}{Z} \cdot \mathscr{N}\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}_{c}, \sigma I\right)$, where $n_{-i, c}$ is the number of data points (excluding $\boldsymbol{x}_{i}$) that are assigned to cluster $c$. With probability
+									For $i=1, \ldots, n$, we reassign $\boldsymbol{x}_{i}$ to existing cluster $c$ with probability $\frac{n_{-i, c}}{Z} \cdot \phi\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}_{c}, \sigma I\right)$, where $n_{-i, c}$ is the number of data points (excluding $\boldsymbol{x}_{i}$) that are assigned to cluster $c$. With probability
 									$
-									\frac{\alpha}{Z} \int \mathscr{N}\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}, \sigma I\right) d G_{0}(\boldsymbol{\mu})
+									\frac{\alpha}{Z} \int \phi\left(\boldsymbol{x}_{i} \mid \boldsymbol{\mu}, \sigma I\right) d G_{0}(\boldsymbol{\mu})
 									$,
 									we start a new cluster. $Z$ is an appropriate normalizing constant here.
 
